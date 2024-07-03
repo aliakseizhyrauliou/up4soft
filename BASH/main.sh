@@ -11,6 +11,12 @@ chmod +x configure-params.sh
 chmod +x update-system.sh
 chmod +x configure-ssh.sh
 chmod +x configure-mysql.sh
+chmod +x configure-nginx.sh
+chmod +x configure-dependencies.sh
+chmod +x configure-apache.sh
+chmod +x configure-wordpress.sh
+
+
 
 # Run sub-scripts
 source ./configure-params.sh
@@ -18,7 +24,10 @@ source ./configure-params.sh
 ./update-system.sh
 ./configure-ssh.sh
 ./configure-mysql.sh
-./configuring-nginx.sh
+./configure-nginx.sh
+./configure-dependencies.sh
+./configure-apache.sh
+./configure-wordpress.sh
 
 
 echo "All done!"
