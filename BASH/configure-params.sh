@@ -2,12 +2,14 @@
 
 export MYSQL_USER="${MYSQL_USER:-wordpress}"
 export MYSQL_PASSWORD="${MYSQL_PASSWORD:-pass}"
+export MYSQL_DATABASE_NAME="${MYSQL_DATABASE_NAME:-wordpress}"
 export LOGS_FILE_PATH="${LOGS_FILE_PATH:-/var/log/up4soft_task.log}"
 export DOMAIN_NAME="${DOMAIN_NAME:-appka.com}"
 export WORDPRESS_PREFIX="${WORDPRESS_PREFIX:-/wordpress}"
 export CUSTOM_PAGE_PREFIX="${CUSTOM_PAGE_PREFIX:-/site}"
+export ROOT_DATABASE_PASSWORD="${ROOT_DATABASE_PASSWORD:-Root123*}"
 
-# Парсинг аргументов командной строки
+
 while [[ $# -gt 0 ]]; do
     key="$1"
     case $key in
@@ -36,19 +38,24 @@ while [[ $# -gt 0 ]]; do
             shift 
             shift 
             ;;
+        -rdp|--root-database-password)
+            ROOT_DATABASE_PASSWORD="$2"
+            shift 
+            shift 
+            ;;
         -cp|--custom-page-prefix)
             CUSTOM_PAGE_PREFIX="$2"
             shift 
             shift 
             ;;
-        *)  # Неизвестный ключ
+        *)  
             echo "Unknown option: $1"
             exit 1
             ;;
     esac
 done
 
-# Дополнительные действия, зависящие от задачи скрипта
+echo "*************************************EXPORTED VARIABLES*************************************"
 echo "MYSQL_USER is set to: $MYSQL_USER"
 echo "MYSQL_PASSWORD is set to: $MYSQL_PASSWORD"
 echo "LOGS_FILE_PATH is set to: $LOGS_FILE_PATH"

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "*************************************UPDATE SYSTEM*************************************"
+
 function CREATE_LOGS_FILE {
     if ! [ -f "$LOGS_FILE_PATH" ]; then
         echo "Creating update system logs file at $LOGS_FILE_PATH"

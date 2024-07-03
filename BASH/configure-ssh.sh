@@ -3,6 +3,9 @@
 SSH_KEYS_PATH="$HOME/.ssh2"
 SSH_AUTHORIZED_KEYS_PATH="$HOME/.ssh2/authorized_keys"
 
+
+echo "*************************************SSH CONFIGURING*************************************"
+
 function IS_SSH_KEYS_EXISTS {
   if [ -d "$SSH_KEYS_PATH" ]; then
     echo "SSH keys exist in $SSH_KEYS_PATH"
@@ -49,3 +52,4 @@ DISABLE_PASSWORD_LOGIN
 sudo systemctl restart ssh
 
 echo "SSH server was restarted"
+

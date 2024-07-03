@@ -10,10 +10,15 @@ fi
 chmod +x configure-params.sh
 chmod +x update-system.sh
 chmod +x configure-ssh.sh
-chmod +x install-mysql.sh
+chmod +x configure-mysql.sh
 
 # Run sub-scripts
-./configure-params.sh
+source ./configure-params.sh
+
 ./update-system.sh
 ./configure-ssh.sh
-./install-mysql.sh
+./configure-mysql.sh
+./configuring-nginx.sh
+
+
+echo "All done!"

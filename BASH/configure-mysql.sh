@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "*************************************MYSQL CONFIGURING*************************************"
 
 function INSTALL_MYSQL {
     if ! dpkg-query -W mysql-server; then
@@ -11,25 +12,44 @@ function INSTALL_MYSQL {
             echo "-------- Install MYSQL finished at $(date) --------"
         } >> "$LOGS_FILE_PATH" 2>&1
 
-        # Проверяем статус установки MySQL
-        sudo systemctl status mysql
+        sudo service mysql status
     else
         echo "MYSQL already installed"
     fi
 }
 
-function CONFIGURE_MYSQL {
-    sudo mysql -u root -p"$MYSQL_ROOT_PASSWORD" <<EOF
-        CREATE DATABASE wordpress;
+function CONFIGURING_WORDPRESS_USER {
+    sudo mysql <<EOF
+
+        CREATE DATABASE $MYSQL_DATABASE_NAME;
+
+        CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';
+
+        GRANT ALL PRIVILEGES ON $MYSQL_DATABASE_NAME.* TO '$MYSQL_USER'@'localhost' WITH GRANT OPTION;
+
+        FLUSH PRIVILEGES;
+EOF
+}
 
 
-        SELECT * FROM table1;
+function SECURE_INSTALLATION {
+        sudo mysql <<EOF
 
-        INSERT INTO table2 (col1, col2) VALUES ('value1', 'value2');
+        ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
 
-        UPDATE table3 SET col1 = 'new_value' WHERE id = 1;
+        DELETE FROM mysql.user WHERE User='';
+
+        DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+
+        DROP DATABASE IF EXISTS test;
+
+        DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+
+        FLUSH PRIVILEGES;
 EOF
 }
 
 INSTALL_MYSQL
-CONFIGURE_MYSQL
+SECURE_INSTALLATION
+CONFIGURING_WORDPRESS_USER
+
