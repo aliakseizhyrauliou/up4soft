@@ -12,6 +12,7 @@ chmod +x update-system.sh
 chmod +x configure-ssh.sh
 chmod +x configure-mysql.sh
 chmod +x configure-nginx.sh
+chmod +x configure-certs.sh
 chmod +x configure-dependencies.sh
 chmod +x configure-apache.sh
 chmod +x configure-wordpress.sh
@@ -25,6 +26,7 @@ source ./configure-params.sh
 ./configure-ssh.sh
 ./configure-mysql.sh
 ./configure-nginx.sh
+./configure-certs.sh
 ./configure-dependencies.sh
 ./configure-apache.sh
 ./configure-wordpress.sh

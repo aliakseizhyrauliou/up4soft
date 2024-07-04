@@ -3,7 +3,7 @@
 echo "*************************************NGINX CONFIGURING*************************************"
 
 SITE_CONFIG_PATH="/etc/nginx/sites-available"
-SITE_CONFIG_TEMPLATE_PATH="../templates/nginx.conf"
+SITE_CONFIG_TEMPLATE_PATH="$SELF_ADDRESS/../templates/nginx.conf"
 
 
 function INSTALL_NGINX {
@@ -16,7 +16,6 @@ function INSTALL_NGINX {
             echo "-------- Install NGINX finished at $(date) --------"
         } >> "$LOGS_FILE_PATH" 2>&1
 
-        sudo systemctl status nginx
     else
         echo "NGINX already installed"
     fi
@@ -26,8 +25,6 @@ function INSTALL_NGINX {
 function CREATE_NEW_CONFIG {
 
     cd $SITE_CONFIG_PATH && touch $DOMAIN_NAME
-
-    cd $HOME/BASH 
 
     cat $SITE_CONFIG_TEMPLATE_PATH > $SITE_CONFIG_PATH/$DOMAIN_NAME
 
@@ -49,11 +46,24 @@ function UPDATE_CONFIGS {
     fi
 }
 
+function DELETE_DEFAULT_SITE {
+    SITE_PATH_ENABLED="/etc/nginx/sites-enabled/default"
+    SITE_PATH_AVALIABLE="/etc/nginx/sites-available/default"
+
+
+    if [ -f "$SITE_PATH_ENABLED" ]; then
+        sudo rm $SITE_PATH_ENABLED
+    fi
+
+    if [ -f "$SITE_PATH_AVALIABLE" ]; then
+        sudo rm $SITE_PATH_AVALIABLE
+    fi
+}
 
 
 INSTALL_NGINX
 UPDATE_CONFIGS
+DELETE_DEFAULT_SITE
 
-sudo nginx -t
+sudo ln -s /etc/nginx/sites-available/$DOMAIN_NAME /etc/nginx/sites-enabled/$DOMAIN_NAME
 
-sudo systemctl restart nginx

@@ -8,6 +8,7 @@ export DOMAIN_NAME="${DOMAIN_NAME:-appka.com}"
 export WORDPRESS_PREFIX="${WORDPRESS_PREFIX:-/wordpress}"
 export CUSTOM_PAGE_PREFIX="${CUSTOM_PAGE_PREFIX:-/site}"
 export ROOT_DATABASE_PASSWORD="${ROOT_DATABASE_PASSWORD:-Root123*}"
+export SELF_ADDRESS=$(pwd)
 
 
 while [[ $# -gt 0 ]]; do
@@ -55,6 +56,8 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+
+
 echo "*************************************EXPORTED VARIABLES*************************************"
 echo "MYSQL_USER is set to: $MYSQL_USER"
 echo "MYSQL_PASSWORD is set to: $MYSQL_PASSWORD"
@@ -62,3 +65,5 @@ echo "LOGS_FILE_PATH is set to: $LOGS_FILE_PATH"
 echo "DOMAIN_NAME is set to: $DOMAIN_NAME"
 echo "WORDPRESS_PREFIX is set to: $WORDPRESS_PREFIX"
 echo "CUSTOM_PAGE_PREFIX is set to: $CUSTOM_PAGE_PREFIX"
+echo "SELF_ADDRESS is set to: $SELF_ADDRESS"
+

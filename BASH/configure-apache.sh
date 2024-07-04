@@ -15,7 +15,6 @@ function ENSURE_APACHE_INSTALLED {
             echo "-------- Install APACHE2 finished at $(date) --------"
         } >> "$LOGS_FILE_PATH" 2>&1
 
-        sudo systemctl status apache2
     else
         echo "APACHE2 already installed"
     fi
@@ -28,8 +27,9 @@ function CREATE_NEW_CONFIG {
 
     cat $SITE_CONFIG_TEMPLATE_PATH > $SITE_CONFIG_PATH
 
-    #sed -i "s/DOMAIN/$DOMAIN_NAME/g" "$SITE_CONFIG_PATH"
-    #Пока ничего менять не требуется
+    sed -i "s#DOMAIN_NAME#$DOMAIN_NAME#g" $SITE_CONFIG_PATH
+    sed -i "s#WORDPRESS_PREFIX#$WORDPRESS_PREFIX#g" $SITE_CONFIG_PATH
+
 }
 
 function UPDATE_CONFIGS {
@@ -58,4 +58,8 @@ ENSURE_APACHE_INSTALLED
 UPDATE_CONFIGS
 UPDATE_PORTS
 
-#sudo systemctl restart apache2
+sudo a2ensite wordpress
+sudo a2enmod rewrite
+sudo a2dissite 000-default
+
+sudo systemctl restart apache2
