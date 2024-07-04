@@ -8,6 +8,7 @@ export DOMAIN_NAME="${DOMAIN_NAME:-appka.com}"
 export WORDPRESS_PREFIX="${WORDPRESS_PREFIX:-/wordpress}"
 export CUSTOM_PAGE_PREFIX="${CUSTOM_PAGE_PREFIX:-/site}"
 export ROOT_DATABASE_PASSWORD="${ROOT_DATABASE_PASSWORD:-Root123*}"
+export CUSTOM_NGINX_PAGE_FOLDER_PATH="${CUSTOM_NGINX_PAGE_FOLDER_PATH:-$HOME/}"
 export SELF_ADDRESS=$(pwd)
 
 
@@ -49,6 +50,11 @@ while [[ $# -gt 0 ]]; do
             shift 
             shift 
             ;;
+        -cnp|--custom-nginx-folder-path)
+            CUSTOM_NGINX_PAGE_FOLDER_PATH="$2"
+            shift 
+            shift 
+            ;;
         *)  
             echo "Unknown option: $1"
             exit 1
@@ -66,4 +72,6 @@ echo "DOMAIN_NAME is set to: $DOMAIN_NAME"
 echo "WORDPRESS_PREFIX is set to: $WORDPRESS_PREFIX"
 echo "CUSTOM_PAGE_PREFIX is set to: $CUSTOM_PAGE_PREFIX"
 echo "SELF_ADDRESS is set to: $SELF_ADDRESS"
+echo "CUSTOM_NGINX_PAGE_FOLDER_PATH is set to: $CUSTOM_NGINX_PAGE_FOLDER_PATH"
+
 

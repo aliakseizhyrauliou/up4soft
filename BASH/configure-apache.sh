@@ -63,3 +63,4 @@ sudo a2enmod rewrite
 sudo a2dissite 000-default
 
 sudo systemctl restart apache2
+sudo systemctl enable apache2

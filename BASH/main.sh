@@ -16,6 +16,7 @@ chmod +x configure-certs.sh
 chmod +x configure-dependencies.sh
 chmod +x configure-apache.sh
 chmod +x configure-wordpress.sh
+chmod +x configure-firewall.sh
 
 
 
@@ -30,6 +31,6 @@ source ./configure-params.sh
 ./configure-dependencies.sh
 ./configure-apache.sh
 ./configure-wordpress.sh
-
+./configure-firewall.sh
 
 echo "All done!"

@@ -13,6 +13,7 @@ function INSTALL_MYSQL {
         } >> "$LOGS_FILE_PATH" 2>&1
 
         sudo service mysql status
+        sudo systemctl enable mysql
     else
         echo "MYSQL already installed"
     fi

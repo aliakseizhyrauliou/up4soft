@@ -1,0 +1,13 @@
+To run script:
+
+    chmod +x main.sh
+    sudo ./main.sh
+
+Script will do:
+
+    1) Configure MySql
+    2) Configure Apache2
+    3) Configure Nginx
+    4) Configure self-sighned cert for Nginx
+    5) Close all ports but 80, 443 and 22
+
