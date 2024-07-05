@@ -14,7 +14,8 @@ SSLDAYS=365
 function CREATE_CERTS {
     echo "Creating a new Certificate ..."
 
-    openssl req -x509 -nodes -newkey rsa:2048 -keyout $SSLNAME.key -out $SSLNAME.crt -days $SSLDAYS
+    openssl req -x509 -nodes -newkey rsa:2048 -keyout $SSLNAME.key -out $SSLNAME.crt -days $SSLDAYS -subj "/C=/ST=/L=/O=/OU=/CN="
+    
 
     if [[ ! -d $KEY_PATH ]]; then
         mkdir -p $KEY_PATH
