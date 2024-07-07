@@ -8,6 +8,8 @@ services:
     volumes:
       - ./nginx/ssl:/etc/nginx/ssl 
       - ./nginx/nginx.conf:/etc/nginx/conf.d/appka.conf
+    networks:
+      - wp
   wordpress:
     depends_on:
       - mysql
@@ -17,30 +19,32 @@ services:
     ports:
       - 8080:80
     environment:
-        WORDPRESS_DB_HOST: mysql:3306
-        WORDPRESS_DB_USER: wp
-        WORDPRESS_DB_PASSWORD: Wp123*
-        WORDPRESS_DB_NAME: wordpress
-        WORDPRESS_CONFIG_EXTRA: |
-          define('WP_SITEURL', 'https://appka.com/wordpress');
-          define('WP_HOME', 'https://appka.com/wordpress');
-          $_SERVER['REQUEST_URI'] = str_replace('/wp-admin/', '/wordpress/wp-admin/', $_SERVER['REQUEST_URI']);
-          $_SERVER['REQUEST_URI'] = str_replace('/wp-login.php', '/wordpress/wp-login.php', $_SERVER['REQUEST_URI']);
-
-          if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-            $_SERVER['HTTPS'] = 'on';
-          } 
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: Wp123*
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_SITEURL', 'https://appka.com/wordpress');
+        define('WP_HOME', 'https://appka.com/wordpress');
     volumes:
       - wordpress:/var/www/html
+    networks:
+      - wp
   mysql:
     image: mysql:5.7
     restart: always
     command: '--default-authentication-plugin=mysql_native_password'
     environment:
-      MYSQL_DATABASE: wordpress 
-      MYSQL_ROOT_PASSWORD: Root123*
+      - MYSQL_ROOT_PASSWORD=Root123*
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wp
+      - MYSQL_PASSWORD=Wp123*
     volumes:
       - mysql-data:/var/lib/mysql  
+    networks:
+      - wp
 volumes:
   wordpress:
   mysql-data:
+networks:
+  wp:
