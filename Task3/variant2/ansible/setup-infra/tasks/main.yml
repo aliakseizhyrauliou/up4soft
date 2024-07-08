@@ -23,7 +23,4 @@
     chdir: "/home/admin/up4soft/Task3/variant2/scripts"
 
 - name: Run Docker Compose
-  community.docker.docker_compose:
-    project_src: /home/admin/up4soft/Task3/variant2/docker-compose.yml
-    state: present
-    restarted: yes
+  shell: cd /home/admin/up4soft/Task3/variant2 && docker compose up -d
