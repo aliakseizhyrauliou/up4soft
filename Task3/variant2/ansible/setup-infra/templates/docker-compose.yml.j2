@@ -21,9 +21,9 @@ services:
       - 8080:80
     environment:
       WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: wp
-      WORDPRESS_DB_PASSWORD: Wp123*
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: {{ wordpress_user }}
+      WORDPRESS_DB_PASSWORD: {{ wordpress_password }}
+      WORDPRESS_DB_NAME: {{ wordpress_db_name }}
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_SITEURL', 'https://{{ domain_name }}/wordpress');
         define('WP_HOME', 'https://{{ domain_name }}/wordpress');
@@ -36,10 +36,10 @@ services:
     restart: always
     command: '--default-authentication-plugin=mysql_native_password'
     environment:
-      - MYSQL_ROOT_PASSWORD=Root123*
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wp
-      - MYSQL_PASSWORD=Wp123*
+      - MYSQL_ROOT_PASSWORD={{ root_password }}
+      - MYSQL_DATABASE={{ wordpress_db_name }}
+      - MYSQL_USER={{ wordpress_user }}
+      - MYSQL_PASSWORD={{ wordpress_password }}
     volumes:
       - mysql-data:/var/lib/mysql  
     networks:

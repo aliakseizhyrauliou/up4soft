@@ -1,4 +1,9 @@
 ---
+- name: Debug home
+  become: false
+  ansible.builtin.debug:
+    msg: dbpass is {{ wordpress_password}}
+    
 - name: Configure and copy docker-compose template
   ansible.builtin.template:
     src: templates/docker-compose.yml.j2
