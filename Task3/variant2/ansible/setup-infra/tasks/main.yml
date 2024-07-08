@@ -1,10 +1,29 @@
 ---
+- name: Check if repository already exists
+  stat:
+    path: /home/admin/up4soft
+  register: repo_check
+
 - name: Clone repository into home folder
   git:
     repo: "https://github.com/aliakseizhyrauliou/up4soft.git"
     dest: "/home/admin/up4soft"
+  when: not repo_check.stat.exists
+
+- name: Update repository
+  git:
+    repo: "https://github.com/aliakseizhyrauliou/up4soft.git"
+    dest: "/home/admin/up4soft"
+    update: yes
+  when: repo_check.stat.exists
 
 - name: Generate Certs
   ansible.builtin.shell: /home/admin/up4soft/Task3/variant2/scripts/configure-certs.sh
   args:
     chdir: "/home/admin/up4soft/Task3/variant2/scripts"
+
+- name: Run Docker Compose
+  community.docker.docker_compose:
+    project_src: /home/admin/up4soft/Task3/variant2/docker-compose.yml
+    state: present
+    restarted: yes
