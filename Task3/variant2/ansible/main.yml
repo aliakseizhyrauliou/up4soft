@@ -3,5 +3,6 @@
   hosts: all
   become: yes
   roles:
+    - role: docker
     - role: setup-infra
     

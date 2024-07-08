@@ -37,7 +37,7 @@
     state: present
 - name: adding ubuntu to docker group
   user:
-    name: ubuntu
+    name: admin
     groups: docker
     append: yes
 - name: Install docker-compose
@@ -48,5 +48,5 @@
 - name: Change file ownership, group and permissions
   ansible.builtin.file:
     path: /usr/local/bin/docker-compose
-    owner: ubuntu
-    group: ubuntu 
+    owner: admin
+    group: admin 
