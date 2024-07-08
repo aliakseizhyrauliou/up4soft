@@ -1,0 +1,10 @@
+---
+- name: Clone repository into home folder
+  git:
+    repo: "https://github.com/aliakseizhyrauliou/up4soft.git"
+    dest: "/root/up4soft"
+
+- name: Generate Certs
+  ansible.builtin.shell: /root/up4soft/Task3/variant2/scripts/configure-certs.sh
+  args:
+    chdir: "/root/up4soft/Task3/variant2/scripts"

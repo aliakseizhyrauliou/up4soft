@@ -1,0 +1,7 @@
+---
+- name: Setup up4soft task
+  hosts: all
+  become: yes
+  roles:
+    - role: setup-infra
+    
