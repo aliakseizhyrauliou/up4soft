@@ -20,16 +20,9 @@ services:
     restart: unless-stopped
     ports:
       - 8080:80
-    environment:
-      WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: {{ wordpress_user }}
-      WORDPRESS_DB_PASSWORD: {{ wordpress_password }}
-      WORDPRESS_DB_NAME: {{ wordpress_db_name }}
-      WORDPRESS_CONFIG_EXTRA: |
-        define('WP_SITEURL', 'https://{{ domain_name }}/wordpress');
-        define('WP_HOME', 'https://{{ domain_name }}/wordpress');
     volumes:
       - wordpress:/var/www/html
+      - {{ ansible_env.HOME }}/wordpress/wp-config.php:/var/www/html/wp-config.php
     networks:
       - wp
   mysql:

@@ -10,6 +10,9 @@
 - name: Setup nginx
   include_tasks: nginx_template.yml
 
+- name: Setup wordpress
+  include_tasks: wordpress_template.yml
+
 - name: Setup docke-compose 
   include_tasks: compose_template.yml
 

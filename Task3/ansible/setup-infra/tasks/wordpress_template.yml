@@ -1,0 +1,11 @@
+---
+- name: Ensure directory exists for wordpress config
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/wordpress"
+    state: directory
+    mode: '0755'
+
+- name: Configure and copy wp-config.php template
+  ansible.builtin.template:
+    src: templates/wp-config.php.j2
+    dest: "{{ ansible_env.HOME }}/wordpress/wp-config.php"
