@@ -1,26 +1,18 @@
 ---
-- name: Check if repository already exists
-  stat:
-    path: /home/admin/up4soft
-  register: repo_check
+- name: Debug home
+  become: false
+  ansible.builtin.debug:
+    msg: Home is {{ ansible_env.HOME }}
+    
+- name: Setup certs
+  include_tasks: generate_certs.yml
 
-- name: Clone repository into home folder
-  git:
-    repo: "https://github.com/aliakseizhyrauliou/up4soft.git"
-    dest: "/home/admin/up4soft"
-  when: not repo_check.stat.exists
+- name: Setup nginx
+  include_tasks: nginx_template.yml
 
-- name: Update repository
-  git:
-    repo: "https://github.com/aliakseizhyrauliou/up4soft.git"
-    dest: "/home/admin/up4soft"
-    update: yes
-  when: repo_check.stat.exists
-
-- name: Generate Certs
-  ansible.builtin.shell: /home/admin/up4soft/Task3/variant2/scripts/configure-certs.sh
-  args:
-    chdir: "/home/admin/up4soft/Task3/variant2/scripts"
+- name: Setup docke-compose 
+  include_tasks: compose_template.yml
 
 - name: Run Docker Compose
-  shell: cd /home/admin/up4soft/Task3/variant2 && docker compose up -d
+  become: true
+  shell: "cd {{ ansible_env.HOME }} && docker-compose up -d"

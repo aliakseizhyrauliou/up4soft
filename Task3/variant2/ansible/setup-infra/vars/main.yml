@@ -1,2 +1,2 @@
----
-# vars file for setup-infra
+domain_name: appka.com
+ssl_path: "{{ ansible_env.HOME }}/nginx/ssl"

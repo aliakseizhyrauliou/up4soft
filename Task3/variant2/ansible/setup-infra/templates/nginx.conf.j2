@@ -1,6 +1,6 @@
 server {
     listen 80 default_server;
-    server_name appka.com;
+    server_name {{ domain_name }};
     return 301 https://$host$request_uri;
 }
 
@@ -9,10 +9,10 @@ server {
     listen [::]:443 ssl default_server;
     port_in_redirect off;
 
-    server_name appka.com;
+    server_name {{ domain_name }};
 
-    ssl_certificate /etc/nginx/ssl/cert/wordpress.crt;
-    ssl_certificate_key /etc/nginx/ssl/private/wordpress.key;
+    ssl_certificate /etc/nginx/ssl/cert/{{ domain_name }}.crt;
+    ssl_certificate_key /etc/nginx/ssl/private/{{ domain_name }}.key;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;

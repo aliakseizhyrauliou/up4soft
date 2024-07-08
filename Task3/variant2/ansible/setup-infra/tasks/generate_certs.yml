@@ -1,0 +1,24 @@
+---
+- name: Copy generate certs script to host
+  become: false
+  copy:
+    src: configure-certs.sh
+    dest: "{{ ansible_env.HOME }}/configure-certs.sh"
+    mode: '0755'
+
+- name: Ensure cert directory exist
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/nginx/cert"
+    state: directory
+    mode: '0755'
+
+- name: Ensure key directory exist
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/nginx/private"
+    state: directory
+    mode: '0755'
+
+- name: Generate certs using script
+  ansible.builtin.shell: "{{ ansible_env.HOME }}/configure-certs.sh --ssl-path {{ ssl_path }} --cert-name {{ domain_name }}"
+  args:
+    chdir: "{{ ansible_env.HOME }}"

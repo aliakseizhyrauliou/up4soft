@@ -1,0 +1,5 @@
+---
+- name: Configure and copy docker-compose template
+  ansible.builtin.template:
+    src: templates/docker-compose.yml.j2
+    dest: "{{ ansible_env.HOME }}/docker-compose.yml"
