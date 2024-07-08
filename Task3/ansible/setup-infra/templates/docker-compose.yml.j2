@@ -9,6 +9,7 @@ services:
     volumes:
       - {{ ssl_path }}:/etc/nginx/ssl
       - {{ ansible_env.HOME }}/nginx/nginx.conf:/etc/nginx/conf.d/appka.conf
+      - {{ ansible_env.HOME }}/nginx/index.html:/src/www/nginx/index.html
     networks:
       - wp
   wordpress:

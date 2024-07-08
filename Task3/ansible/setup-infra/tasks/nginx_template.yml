@@ -5,6 +5,12 @@
     state: directory
     mode: '0755'
 
+- name: Copy /site template
+  copy:
+    src: nginx-custom-page.html
+    dest: "{{ ansible_env.HOME }}/nginx/index.html"
+    mode: '0755'
+
 - name: Configure and copy nginx.conf template
   ansible.builtin.template:
     src: templates/nginx.conf.j2

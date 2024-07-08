@@ -4,6 +4,7 @@
   roles:
     - role: docker
     - role: setup-infra
+    - role: setup-firewall
   vars_files:
     - setup-infra/vars/db_creds.yml
     - setup-infra/vars/main.yml

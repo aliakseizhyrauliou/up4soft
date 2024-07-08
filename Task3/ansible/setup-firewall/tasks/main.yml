@@ -1,0 +1,59 @@
+---
+- name: Install iptables-persistent package
+  apt:
+    name: iptables-persistent
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Configure iptables to allow ports 80, 443, and 22
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item }}"
+    jump: ACCEPT
+  loop:
+    - 80
+    - 443
+    - 22
+  become: yes
+
+- name: Allow loopback interface traffic
+  iptables:
+    chain: INPUT
+    in_interface: lo
+    jump: ACCEPT
+  become: yes
+
+- name: Allow established and related connections
+  iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+  become: yes
+
+- name: Set default policies to drop for INPUT and FORWARD chains
+  iptables:
+    chain: "{{ item }}"
+    policy: DROP
+  loop:
+    - INPUT
+    - FORWARD
+  become: yes
+
+- name: Set default policy to accept for OUTPUT chain
+  iptables:
+    chain: OUTPUT
+    policy: ACCEPT
+  become: yes
+
+- name: Save iptables rules
+  shell: iptables-save > /etc/iptables/rules.v4
+  become: yes
+
+- name: Restart netfilter-persistent service
+  service:
+    name: netfilter-persistent
+    state: restarted
+  become: yes
+
